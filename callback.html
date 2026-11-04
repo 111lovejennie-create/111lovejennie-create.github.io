@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tesla OAuth Callback</title>
+<style>
+  body { font-family: -apple-system, sans-serif; margin: 24px; color: #111; }
+  textarea { width: 100%; height: 120px; font-size: 13px; word-break: break-all; }
+  button { font-size: 17px; padding: 12px 20px; margin-top: 12px; }
+</style>
+</head>
+<body>
+<h3>授权完成</h3>
+<p>把下面这一整段网址复制下来，发给 Muse（整段复制，不要漏字）：</p>
+<textarea id="u" readonly></textarea>
+<br>
+<button onclick="copyUrl()">复制网址</button>
+<p id="msg"></p>
+<script>
+  var url = window.location.href;
+  document.getElementById('u').value = url;
+  function copyUrl() {
+    var t = document.getElementById('u');
+    t.select();
+    t.setSelectionRange(0, url.length);
+    var done = function() { document.getElementById('msg').textContent = '已复制，去粘贴给 Muse 吧。'; };
+    if (navigator.clipboard && navigator.clipboard.writeText) {
+      navigator.clipboard.writeText(url).then(done, function() { document.execCommand('copy'); done(); });
+    } else { document.execCommand('copy'); done(); }
+  }
+</script>
+</body>
+</html>
